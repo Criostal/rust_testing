@@ -4,6 +4,8 @@ use reqwest::header::AUTHORIZATION;
 use reqwest::header::ACCEPT;
 use reqwest::header::CONTENT_TYPE;
 
+extern crate base64;
+
 #[tokio::main]
 async fn main() {
     #![allow(non_snake_case)]
@@ -14,9 +16,8 @@ async fn main() {
     let url = format!("http://ds-vm-csovcs01:8080/NxCollection/Medication/_apis/build/builds/{buildId}/workitems?$top={batchSize}&api-version=5.0");
     let token = "emrkd7xwylje5daa4sy5w2dh2y4wzfmqacvtm4ybqpmk3ag6426q";
     let token2 = "OmFmdGV3aXhvY3R3MmVzZ3I1YW1tazZkYzY1aGthdWYzaGo3ZDd2YjdvNnpnc3dibWlmN3E=";
-
-    
-
+    let myToken64 = base64::encode(&token);
+    println!("{myToken64}");
     let response = client
     .get(url)
     .header(AUTHORIZATION, format!("Basic {token2}"))
@@ -31,3 +32,4 @@ async fn main() {
     println!("{:?}", response)
     
 }
+
